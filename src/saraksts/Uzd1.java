@@ -1,5 +1,6 @@
 package saraksts;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -76,8 +77,77 @@ public class Uzd1 {
 						: "Produkts netika atrasts sarakstā!", "Informācija", JOptionPane.INFORMATION_MESSAGE);
 				break;
 			
-				//Turpināsim
+			case "5":
+				do {
+					koPievienot = JOptionPane.showInputDialog("Kādu produktu pievienot?");
+					kurPievienot = Integer.parseInt(JOptionPane.showInputDialog("Kurā pozīcijā pievienot?"));
+					
+					//Nodrošināt to, ka nevar pievienot pa tālu vai pa tuvu
+					
+					
+					
+				} while ((jauEksiste(saraksts, koPievienot) == true) || !koPievienot.matches("^[\\p{L} ]+$") ||
+						kurPievienot > saraksts.size() 
+						|| kurPievienot < 0);
+				saraksts.add(kurPievienot-1, koPievienot);
+					break;
 				
+			
+			case "6":
+				do {
+					koNonemt = JOptionPane.showInputDialog("Kuru produktu noņemt?");
+				}while(!koNonemt.matches("^[\\{L} ]+$") || !jauEksiste(saraksts, koNonemt));
+				
+				if(saraksts.remove(koNonemt.toLowerCase()))
+					JOptionPane.showMessageDialog(null, "Produkts noņemts!", "Paziņojums", JOptionPane.INFORMATION_MESSAGE);
+				
+				break;
+				
+			case "7":
+				//Papildināt ar pārbaudi, lai indekss nav par lielu/mazu
+				
+				do {
+				kurNonemt = Integer.parseInt(JOptionPane.showInputDialog("Kuras pozīcijas elementu noņemt?"));
+				}while(kurNonemt<0 || kurNonemt >= saraksts.size());
+				
+					JOptionPane.showMessageDialog(null, "Produkts noņemts!", "Paziņojums", JOptionPane.INFORMATION_MESSAGE);
+				
+				break;
+				
+			case "8":
+				saraksts.removeFirst();
+				break;
+				
+			case "9":
+				saraksts.removeLast();
+				break;
+				
+			case "10":
+				// pielikt pārbaudes indeksam
+				do {
+					kuruMainit = Integer.parseInt(JOptionPane.showInputDialog("Kura indeksa elementu mainīt?"));
+					arKoAizstat = JOptionPane.showInputDialog("Kāds  būs jaunais produkts");
+				}while(!arKoAizstat.matches("^[\\{L} ]+$")); 
+				saraksts.set(kuruMainit, arKoAizstat);
+				break;
+				
+			case "11":
+				// papildināt ar iespēju augoši / dilstoši
+				Collections.sort(saraksts);
+				break;
+				
+			case "12":
+				// papildus paziņojums vai tiešām vēlies visu dzēsts
+				saraksts.clear();
+				JOptionPane.showMessageDialog(null, "Viss saraksts attīrīts!", "Ziņojums", JOptionPane.WARNING_MESSAGE);
+				break;
+				
+			case "0":
+				JOptionPane.showMessageDialog(null, "Programma apturēta!", "Paziņojums", JOptionPane.INFORMATION_MESSAGE);
+				break;
+				
+				default:
+					JOptionPane.showMessageDialog(null, "Šāda darbība nepastāv!", "Brīdinājums", JOptionPane.WARNING_MESSAGE);
 			}
 		}while(!izvele.equals("0"));
 
