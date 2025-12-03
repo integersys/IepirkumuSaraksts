@@ -40,6 +40,9 @@ public class Uzd1 {
 			case "1":
 				do {
 					koPievienot = JOptionPane.showInputDialog("Kādu produktu pievienot?");
+					if(koPievienot == null) {
+						return;
+					}
 				}while((jauEksiste(saraksts, koPievienot) == true) || !koPievienot.matches("^[\\p{L} ]+$"));
 				
 				saraksts.add(koPievienot.toLowerCase());
@@ -71,15 +74,29 @@ public class Uzd1 {
 				do {
 					koAtrast = JOptionPane.showInputDialog(null, "Kādu produktu meklēt sarakstā?", "Jautājums", 
 							JOptionPane.INFORMATION_MESSAGE);
+					if(koAtrast == null) {
+						koAtrast = "";
+						break;
+					}
 				}while(!koAtrast.matches("^[\\p{L} ]+$"));
+				
+				koAtrast.toLowerCase();
 				
 				JOptionPane.showMessageDialog(null, ((saraksts.indexOf(koAtrast))>-1)? "Produkts atrasts "+saraksts.indexOf(koAtrast)+". pozīcijā"
 						: "Produkts netika atrasts sarakstā!", "Informācija", JOptionPane.INFORMATION_MESSAGE);
+				
+				
 				break;
 			
 			case "5":
 				do {
 					koPievienot = JOptionPane.showInputDialog("Kādu produktu pievienot?");
+					
+					if(koPievienot == null) {
+						koPievienot = "";
+						return;
+					}
+					
 					kurPievienot = Integer.parseInt(JOptionPane.showInputDialog("Kurā pozīcijā pievienot?"));
 					
 					//Nodrošināt to, ka nevar pievienot pa tālu vai pa tuvu
@@ -96,6 +113,12 @@ public class Uzd1 {
 			case "6":
 				do {
 					koNonemt = JOptionPane.showInputDialog("Kuru produktu noņemt?");
+					
+					if(koNonemt == null) {
+						koNonemt = "";
+						return;
+					}
+					
 				}while(!koNonemt.matches("^[\\{L} ]+$") || !jauEksiste(saraksts, koNonemt));
 				
 				if(saraksts.remove(koNonemt.toLowerCase()))
@@ -115,17 +138,36 @@ public class Uzd1 {
 				break;
 				
 			case "8":
-				saraksts.removeFirst();
+				
+				if (saraksts.isEmpty()) {  
+					JOptionPane.showMessageDialog(null, "Saraksts ir tukšs! Vispirms izveido produktu.", "Paziņojums", JOptionPane.INFORMATION_MESSAGE);
+					} else {     
+					JOptionPane.showMessageDialog(null, "Pirmais produkts noņemts!", "Paziņojums", JOptionPane.INFORMATION_MESSAGE);
+					saraksts.removeFirst();
+				}
 				break;
 				
 			case "9":
-				saraksts.removeLast();
+				
+				if (saraksts.isEmpty()) {  
+					JOptionPane.showMessageDialog(null, "Saraksts ir tukšs! Vispirms izveido produktu.", "Paziņojums", JOptionPane.INFORMATION_MESSAGE);
+					} else {     
+					JOptionPane.showMessageDialog(null, "Pēdējais produkts noņemts!", "Paziņojums", JOptionPane.INFORMATION_MESSAGE);
+					saraksts.removeLast();
+				}
 				break;
 				
 			case "10":
 				// pielikt pārbaudes indeksam
 				do {
 					kuruMainit = Integer.parseInt(JOptionPane.showInputDialog("Kura indeksa elementu mainīt?"));
+					if(kuruMainit/1 == kuruMainit) {
+						System.out.println("Ir indekss");
+					}else {
+						kuruMainit = "";
+						break;
+					}
+					
 					arKoAizstat = JOptionPane.showInputDialog("Kāds  būs jaunais produkts");
 				}while(!arKoAizstat.matches("^[\\{L} ]+$")); 
 				saraksts.set(kuruMainit, arKoAizstat);
